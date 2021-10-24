@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "datetime": 1634117125000,
+    "severity": "info",
+    "message": "some message"
+  },
+  {
+    "id": 2,
+    "datetime": 1634327225000,
+    "severity": "warning",
+    "message": "some message"
+  },
+  {
+    "id": 3,
+    "datetime": 1634537325000,
+    "severity": "error",
+    "message": "some message"
+  },
+  {
+    "id": 4,
+    "datetime": 1634747425000,
+    "severity": "info",
+    "message": "some message wiuefhiourf 34bfi3qrbq3r q3iru3iur veriub3irpu feriubieu"
+  },
+  {
+    "id": 5,
+    "datetime": 1634857525000,
+    "severity": "info",
+    "message": "some message"
+  },
+  {
+    "id": 6,
+    "datetime": 1634967625000,
+    "severity": "error",
+    "message": "some message"
+  }
+]
