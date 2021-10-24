@@ -1,7 +1,12 @@
+export enum Severity {
+  INFO = "info",
+  WARNING = "warning",
+  ERROR = "error",
+}
+
 export interface LogI {
-  id: number;
   datetime: number;
-  severity: "info" | "warning" | "error";
+  severity: Severity.INFO | Severity.WARNING | Severity.ERROR;
   message: string;
 }
 

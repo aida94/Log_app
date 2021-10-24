@@ -30,11 +30,11 @@ const Home: React.FC<HomeProps> = ({
     getLogs();
   }, [getLogs]);
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     getLogs();
-  //   }, 2000);
-  // }, [getLogs]);
+  useEffect(() => {
+    setInterval(() => {
+      getLogs();
+    }, 10000);
+  });
 
   return (
     <Container maxWidth="md" className={classes.root}>
@@ -56,8 +56,8 @@ const Home: React.FC<HomeProps> = ({
 
       {loading && <Loading />}
 
-      {logs?.map((log) => (
-        <LogItem key={log.id} log={log} />
+      {logs?.map((log, index) => (
+        <LogItem key={index} log={log} />
       ))}
     </Container>
   );
