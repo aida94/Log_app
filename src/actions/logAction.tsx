@@ -1,26 +1,35 @@
 import { GET_LOGS, LOGS_LOADING } from "./types";
-import { LogI } from "./../shared/interfaces";
-import mockedLogList from "./../mock/logList.json";
-import { returnErrors } from "./errorAction";
+import { LogI, Severity } from "./../shared/interfaces";
 
 // Get Logs
 export const getLogs = () => async (dispatch: any) => {
   // Logs loading
   dispatch({ type: LOGS_LOADING });
 
-  try {
-    const res = new Promise<LogI[]>((resolve) => {
-      setTimeout(() => {
-        resolve(mockedLogList as LogI[]);
-      }, 1000);
-    });
+  setInterval(() => {
+    dispatch({ type: GET_LOGS, payload: [generateRandomLog()] });
+  }, 1000);
 
-    console.log(res);
+  // dispatch(
+  //   returnErrors(err.response.data, err.response.status, "GET_LOGS_FAIL")
+  // );
+};
 
-    dispatch({ type: GET_LOGS, payload: mockedLogList });
-  } catch (err: any) {
-    dispatch(
-      returnErrors(err.response.data, err.response.status, "GET_LOGS_FAIL")
-    );
-  }
+const mockSeverity: Severity[] = [
+  Severity.INFO,
+  Severity.WARNING,
+  Severity.ERROR,
+];
+const mockMessages: string[] = ["message 1", "message 2", "message 3"];
+
+export const pickRandomElementFromArray = (array: any[]): any => {
+  return array[Math.floor(Math.random() * array.length)];
+};
+
+export const generateRandomLog = (): LogI => {
+  return {
+    datetime: new Date().getTime(),
+    message: pickRandomElementFromArray(mockMessages),
+    severity: pickRandomElementFromArray(mockSeverity),
+  };
 };

@@ -1,5 +1,5 @@
 import { GET_LOGS, LOGS_LOADING } from "./../actions/types";
-import { ActionI, LogI } from "./../shared/interfaces";
+import { ActionI, LogI, Severity } from "./../shared/interfaces";
 
 const initialState = {
   logs: [],
@@ -14,18 +14,24 @@ const initialState = {
 const logReducer = (state = initialState, action: ActionI) => {
   switch (action.type) {
     case GET_LOGS:
+      const amount = (action.payload as LogI[]).reduce<
+        Record<Severity, number>
+      >(
+        (acc, log) => {
+          acc[log.severity] = (acc[log.severity] || 0) + 1;
+          return acc;
+        },
+        { [Severity.INFO]: 0, [Severity.WARNING]: 0, [Severity.ERROR]: 0 }
+      );
+
       return {
         ...state,
-        logs: action.payload,
+        logs: [...state.logs, ...action.payload],
         loading: false,
         logTypeAmount: {
-          info: action.payload.filter((el: LogI) => el.severity === "info")
-            .length,
-          warning: action.payload.filter(
-            (el: LogI) => el.severity === "warning"
-          ).length,
-          error: action.payload.filter((el: LogI) => el.severity === "error")
-            .length,
+          info: state.logTypeAmount.info + amount.info,
+          warning: state.logTypeAmount.warning + amount.warning,
+          error: state.logTypeAmount.error + amount.error,
         },
       };
 
