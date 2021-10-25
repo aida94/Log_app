@@ -1,7 +1,12 @@
-import { GET_LOGS, LOGS_LOADING } from "./../actions/types";
-import { ActionI, LogI, Severity } from "./../shared/interfaces";
+import { GET_LOGS, LOGS_LOADING } from "../shared/reduxTypes";
+import { ActionI, LogI, LogTypeI } from "./../shared/interfaces";
+import { Severity } from "./../shared/constants";
 
-const initialState = {
+const initialState: {
+  logs: LogI[];
+  loading: boolean;
+  logTypeAmount: LogTypeI;
+} = {
   logs: [],
   loading: false,
   logTypeAmount: {

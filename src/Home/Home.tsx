@@ -1,40 +1,33 @@
 import React, { useEffect } from "react";
-import { Container, Alert, Divider, Typography } from "@mui/material";
-import { connect } from "react-redux";
+import { Container, Alert, Divider, Typography, Paper } from "@mui/material";
+import { useDispatch } from "react-redux";
 
-import Error from "../components/Error";
 import Loading from "../components/Loading";
 import LogItem from "../components/LogItem";
-import { LogI, LogTypeI, ErrorI } from "../shared/interfaces";
-import { getLogs } from "./../actions/logAction";
+import { generateRandomLog } from "../utils/generateRandomLog";
+import { useAppSelector } from "../hooks/reduxHooks";
+import { GET_LOGS, LOGS_LOADING } from "../shared/reduxTypes";
 import { useStyles } from "./styles";
 
-interface HomeProps {
-  logs: LogI[];
-  logTypeAmount: LogTypeI;
-  loading: boolean;
-  error: ErrorI;
-  getLogs: () => {};
-}
+interface HomeProps {}
 
-const Home: React.FC<HomeProps> = ({
-  logs,
-  logTypeAmount,
-  loading,
-  error,
-  getLogs,
-}) => {
+const Home: React.FC<HomeProps> = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { logs, loading, logTypeAmount } = useAppSelector(
+    (state) => state.logState
+  );
 
   useEffect(() => {
-    getLogs();
-  }, [getLogs]);
+    dispatch({ type: LOGS_LOADING });
+    dispatch({ type: GET_LOGS, payload: [generateRandomLog()] });
 
-  useEffect(() => {
     setInterval(() => {
-      getLogs();
+      dispatch({ type: GET_LOGS, payload: [generateRandomLog()] });
     }, 10000);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container maxWidth="md" className={classes.root}>
@@ -52,22 +45,15 @@ const Home: React.FC<HomeProps> = ({
 
       <Typography className={classes.title}>Logs:</Typography>
 
-      {error && <Error msg={error.msg} />}
-
       {loading && <Loading />}
 
-      {logs?.map((log, index) => (
-        <LogItem key={index} log={log} />
-      ))}
+      <Paper className={classes.logContainer}>
+        {logs?.map((log, index) => (
+          <LogItem key={index} log={log} />
+        ))}
+      </Paper>
     </Container>
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  logs: state.logState.logs,
-  loading: state.logState.loading,
-  logTypeAmount: state.logState.logTypeAmount,
-  error: state.error,
-});
-
-export default connect(mapStateToProps, { getLogs })(Home);
+export default Home;

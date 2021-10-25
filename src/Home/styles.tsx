@@ -12,4 +12,8 @@ export const useStyles = makeStyles({
     paddingTop: 20,
     paddingBottom: 20,
   },
+  logContainer: {
+    marginBottom: 20,
+    padding: 20,
+  },
 });
