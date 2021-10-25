@@ -15,3 +15,6 @@ export const store = createStore(
   initialState,
   compose(applyMiddleware(...middleware, routerMiddleware(history)))
 );
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

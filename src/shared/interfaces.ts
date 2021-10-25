@@ -1,8 +1,4 @@
-export enum Severity {
-  INFO = "info",
-  WARNING = "warning",
-  ERROR = "error",
-}
+import { Severity } from "./constants";
 
 export interface LogI {
   datetime: number;
@@ -14,12 +10,6 @@ export interface LogTypeI {
   info: number;
   warning: number;
   error: number;
-}
-
-export interface ErrorI {
-  id: string;
-  msg: string;
-  status: number;
 }
 
 export interface ActionI {
