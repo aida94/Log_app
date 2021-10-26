@@ -21,10 +21,12 @@ const Home: React.FC<HomeProps> = () => {
 
   useEffect(() => {
     dispatch({ type: LOGS_LOADING });
-    dispatch({ type: GET_LOGS, payload: [generateRandomLog()] });
+    setTimeout(() => {
+      dispatch({ type: GET_LOGS, payload: generateRandomLog() });
+    }, 1000);
 
     setInterval(() => {
-      dispatch({ type: GET_LOGS, payload: [generateRandomLog()] });
+      dispatch({ type: GET_LOGS, payload: generateRandomLog() });
     }, 10000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
