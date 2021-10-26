@@ -3,14 +3,19 @@ export enum Severity {
   WARNING = "warning",
   ERROR = "error",
 }
+
 export const mockSeverity: Severity[] = [
   Severity.INFO,
   Severity.WARNING,
   Severity.ERROR,
 ];
 
-export const mockMessages: string[] = [
-  "Something truly awesome happened.",
-  "Record not found",
-  "Server Error",
-];
+export const mockMessages: Record<Severity, string[]> = {
+  [Severity.INFO]: ["Something truly awesome happened."],
+  [Severity.WARNING]: [
+    "Static file was not found",
+    "Record not found",
+    "Server Error",
+  ],
+  [Severity.ERROR]: ["Record not found", "Server Error"],
+};
